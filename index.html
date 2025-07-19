@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TerrAI - AI-Powered Geotechnical Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+        
+        /* Language Switching CSS */
+        body.lang-en .lang-jp { display: none; }
+        body.lang-jp .lang-en { display: none; }
+        .lang-en, .lang-jp { display: inline; }
+
+
+        /* Color System */
+        :root {
+            --earth-brown: #8B4513;
+            --soil-orange: #CD853F;
+            --tech-blue: #3498db;
+            --deep-gray: #34495e;
+            --light-gray: #f8f9fa;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #8B4513 0%, #CD853F 50%, #3498db 100%);
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e0e0e0;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center; /* This is key for vertical alignment */
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--deep-gray);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            white-space: nowrap; /* Prevents wrapping */
+        }
+        
+        .nav-links a:hover {
+            color: var(--tech-blue);
+        }
+        
+        .cta-nav {
+            background: var(--tech-blue);
+            color: white !important;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-nav:hover {
+            background: var(--earth-brown);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+        }
+        
+        /* Language Switcher */
+        .lang-switcher {
+            display: flex;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .lang-switcher button {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--deep-gray);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .lang-switcher button.active {
+            background-color: var(--tech-blue);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.05) 0%, rgba(205, 133, 63, 0.05) 50%, rgba(52, 152, 219, 0.05) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><path d="M0 200C100 180 200 220 300 200C400 180 500 220 600 200C700 180 800 220 900 200C1000 180 1000 1000 0 1000Z" fill="rgba(139,69,19,0.03)"/><path d="M0 400C150 380 250 420 400 400C550 380 650 420 800 400C950 380 1000 420 1000 400V1000H0Z" fill="rgba(205,133,63,0.03)"/></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.5;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--deep-gray);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--tech-blue);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--deep-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .cta-buttons {
+            margin-top: 3rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--tech-blue);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--earth-brown);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--deep-gray);
+            border: 2px solid var(--deep-gray);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--deep-gray);
+            color: white;
+        }
+        
+        /* Problem Section */
+        .problem {
+            padding: 6rem 0;
+            background: var(--white);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--deep-gray);
+            margin-bottom: 1rem;
+        }
+        
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--deep-gray);
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .problem-card {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        }
+        
+        .problem-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .problem-card h3 {
+            font-size: 1.5rem;
+            color: var(--deep-gray);
+            margin-bottom: 1rem;
+        }
+        
+        .problem-card p {
+            color: var(--deep-gray);
+            opacity: 0.8;
+        }
+        
+        /* Solution Section */
+        .solution {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, rgba(139, 69, 19, 0.05) 100%);
+        }
+        
+        .solution-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .solution-text h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--deep-gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .solution-text p {
+            font-size: 1.1rem;
+            color: var(--deep-gray);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-list li {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--tech-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+        
+        .solution-visual {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ai-agents {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .agent {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .agent:nth-child(1) { background: var(--earth-brown); }
+        .agent:nth-child(2) { background: var(--soil-orange); }
+        .agent:nth-child(3) { background: var(--tech-blue); }
+        
+        .data-flow {
+            text-align: center;
+            color: var(--deep-gray);
+            font-size: 0.9rem;
+            padding: 1rem;
+            background: var(--light-gray);
+            border-radius: 8px;
+        }
+        
+        /* Market Section */
+        .market {
+            padding: 6rem 0;
+            background: var(--white);
+        }
+        
+        .market-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 3rem;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .market-circle {
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            padding: 1rem;
+        }
+        
+        .market-circle:hover {
+            transform: scale(1.05);
+        }
+
+        .tam-separate {
+            width: 280px;
+            height: 280px;
+            background: rgba(139, 69, 19, 0.8);
+            font-size: 1.1rem;
+        }
+
+        .sam-separate {
+            width: 240px;
+            height: 240px;
+            background: rgba(205, 133, 63, 0.9);
+            font-size: 1rem;
+        }
+
+        .som-separate {
+            width: 200px;
+            height: 200px;
+            background: var(--tech-blue);
+            font-size: 0.9rem;
+        }
+        
+        .market-text-content {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .market-text-content span {
+            font-weight: 500;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .market-text-content div {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin: 0.2em 0;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 6rem 0;
+            background: var(--light-gray);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .team-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        }
+        
+        .team-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        
+        .team-card h3 {
+            color: var(--deep-gray);
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-card .role {
+            color: var(--tech-blue);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .team-card p {
+            font-size: 0.9rem;
+            color: var(--deep-gray);
+            opacity: 0.8;
+        }
+        
+        /* CTA Section */
+        .final-cta {
+            padding: 6rem 0;
+            background: var(--deep-gray);
+            color: white;
+            text-align: center;
+        }
+        
+        .final-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .final-cta p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--earth-brown);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .market-visual {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .nav-right {
+                gap: 1rem;
+            }
+            
+            .hero-stats {
+                gap: 1.5rem;
+            }
+            
+            .solution-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .ai-agents {
+                justify-content: space-around;
+            }
+        }
+    </style>
+</head>
+<body class="lang-en"> <!-- Default language -->
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">TerrAI</div>
+            <ul class="nav-links">
+                <li><a href="#problem"><span class="lang-en">Problem</span><span class="lang-jp">課題</span></a></li>
+                <li><a href="#solution"><span class="lang-en">Solution</span><span class="lang-jp">ソリューション</span></a></li>
+                <li><a href="#market"><span class="lang-en">Market</span><span class="lang-jp">市場</span></a></li>
+                <li><a href="#team"><span class="lang-en">Team</span><span class="lang-jp">チーム</span></a></li>
+                <li>
+                    <div class="lang-switcher">
+                        <button id="lang-en-btn">EN</button>
+                        <button id="lang-jp-btn">JP</button>
+                    </div>
+                </li>
+                <li><a href="#contact" class="cta-nav"><span class="lang-en">Get Started</span><span class="lang-jp">始める</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>
+                <span class="lang-en">AI-Powered Geotechnical Intelligence</span>
+                <span class="lang-jp">AIによる地盤インテリジェンス</span>
+            </h1>
+            <p class="hero-subtitle">
+                <span class="lang-en">Transform ground investigation from weeks to hours with Multi-Agent AI systems that scale expert knowledge for smarter construction decisions.</span>
+                <span class="lang-jp">マルチエージェントAIシステムで地盤調査を数週間から数時間に変革。専門家の知識をスケールさせ、より賢明な建設決定を実現します。</span>
+            </p>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number"><48h</div>
+                    <div class="stat-label">
+                        <span class="lang-en">Analysis Time</span>
+                        <span class="lang-jp">解析時間</span>
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">¥1.15M</div>
+                    <div class="stat-label">
+                        <span class="lang-en">Saved Per Project</span>
+                        <span class="lang-jp">プロジェクト毎の削減額</span>
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">
+                        <span class="lang-en">Faster Reporting</span>
+                        <span class="lang-jp">報告の迅速化</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta-buttons">
+                <a href="mailto:info.terrai.2025@gmail.com" class="btn btn-primary">
+                    <span class="lang-en">Request Demo</span>
+                    <span class="lang-jp">デモをリクエスト</span>
+                </a>
+                <a href="#solution" class="btn btn-secondary">
+                    <span class="lang-en">Learn More</span>
+                    <span class="lang-jp">さらに詳しく</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="problem">
+        <div class="container">
+            <div class="section-header">
+                <h2>
+                    <span class="lang-en">Ground Investigation is Broken</span>
+                    <span class="lang-jp">現行の地盤調査は限界に</span>
+                </h2>
+                <p>
+                    <span class="lang-en">Traditional geotechnical due diligence is slow, expensive, and unreliable—putting billions in construction at risk.</span>
+                    <span class="lang-jp">従来の地盤デューデリジェンスは遅く、高価で、信頼性に欠け、数十億規模の建設プロジェクトをリスクに晒しています。</span>
+                </p>
+            </div>
+            
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">⏰</div>
+                    <h3>
+                        <span class="lang-en">Weeks of Delays</span>
+                        <span class="lang-jp">数週間の遅延</span>
+                    </h3>
+                    <p>
+                        <span class="lang-en">Manual soil analysis takes weeks, delaying entire project timelines and increasing holding costs.</span>
+                        <span class="lang-jp">手作業による土壌分析は数週間を要し、プロジェクト全体の遅延と保有コストの増加を招きます。</span>
+                    </p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">💰</div>
+                    <h3>
+                        <span class="lang-en">Massive Inefficiency</span>
+                        <span class="lang-jp">甚大な非効率性</span>
+                    </h3>
+                    <p>
+                        <span class="lang-en">¥1.4M+ per project on tedious data work, forcing mid-size projects to rely on guesswork.</span>
+                        <span class="lang-jp">退屈なデータ作業にプロジェクトあたり140万円以上を費やし、中規模プロジェクトは推測に頼らざるを得ません。</span>
+                    </p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">🎲</div>
+                    <h3>
+                        <span class="lang-en">Subjective & Unscalable</span>
+                        <span class="lang-jp">主観的でスケール不能</span>
+                    </h3>
+                    <p>
+                        <span class="lang-en">Reliance on human judgment creates inconsistent risk assessments and an unscalable "expert" bottleneck.</span>
+                        <span class="lang-jp">人の判断に頼るため、リスク評価に一貫性がなく、「専門家」というボトルネックはスケールできません。</span>
+                    </p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">📊</div>
+                    <h3>
+                        <span class="lang-en">Data is Underutilized</span>
+                        <span class="lang-jp">未活用のデータ</span>
+                    </h3>
+                    <p>
+                        <span class="lang-en">Critical insights are lost in fragmented data sources, increasing the risk of costly construction surprises.</span>
+                        <span class="lang-jp">断片的なデータソースに重要な洞察が埋もれ、高額な建設中の不測の事態のリスクを高めます。</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="solution">
+        <div class="container">
+            <div class="solution-content">
+                <div class="solution-text">
+                    <h2>
+                        <span class="lang-en">Multi-Agent AI for Ground Intelligence</span>
+                        <span class="lang-jp">マルチエージェントAIによる地盤インテリジェンス</span>
+                    </h2>
+                    <p>
+                        <span class="lang-en">TerrAI transforms expert geotechnical knowledge into scalable AI agents that collaborate to deliver reliable, standardized ground analysis in under 48 hours.</span>
+                        <span class="lang-jp">TerrAIは専門家の地盤工学知識をスケーラブルなAIエージェントに変換し、協働して48時間以内に信頼性の高い標準化された地盤解析を提供します。</span>
+                    </p>
+                    
+                    <ul class="feature-list">
+                        <li>
+                            <div class="feature-icon">✓</div>
+                            <span>
+                                <strong><span class="lang-en">Expert AI Agents</span><span class="lang-jp">専門AIエージェント</span></strong>
+                                <span class="lang-en"> process multimodal data (boreholes, GIS, surveys).</span>
+                                <span class="lang-jp"> が多種多様なデータ（ボーリング、GIS、測量）を処理。</span>
+                            </span>
+                        </li>
+                        <li>
+                            <div class="feature-icon">✓</div>
+                            <span>
+                                <strong><span class="lang-en">Continuous Learning</span><span class="lang-jp">継続的な学習</span></strong>
+                                <span class="lang-en"> from expert feedback improves accuracy over time.</span>
+                                <span class="lang-jp"> が専門家のフィードバックから学習し、時間と共に精度を向上。</span>
+                            </span>
+                        </li>
+                        <li>
+                            <div class="feature-icon">✓</div>
+                            <span>
+                                <strong><span class="lang-en">Standardized Reports</span><span class="lang-jp">標準化されたレポート</span></strong>
+                                <span class="lang-en"> ensure compliance and reproducibility.</span>
+                                <span class="lang-jp"> がコンプライアンスと再現性を保証。</span>
+                            </span>
+                        </li>
+                        <li>
+                            <div class="feature-icon">✓</div>
+                            <span>
+                                <strong><span class="lang-en">Risk Quantification</span><span class="lang-jp">リスクの定量化</span></strong>
+                                <span class="lang-en"> converts intuition into measurable insights.</span>
+                                <span class="lang-jp"> が直感を測定可能な洞察に変換。</span>
+                            </span>
+                        </li>
+                    </ul>
+                    
+                    <a href="mailto:info.terrai.2025@gmail.com" class="btn btn-primary">
+                        <span class="lang-en">See How It Works</span>
+                        <span class="lang-jp">仕組みを見る</span>
+                    </a>
+                </div>
+                
+                <div class="solution-visual">
+                    <div class="ai-agents">
+                        <div class="agent">GEO</div>
+                        <div class="agent">DATA</div>
+                        <div class="agent">RISK</div>
+                    </div>
+                    <div class="data-flow">
+                        <strong><span class="lang-en">Multi-Agent Collaboration</span><span class="lang-jp">マルチエージェント連携</span></strong><br>
+                        <span class="lang-en">Borehole Data → GIS Analysis → Risk Assessment → Standardized Report Generation</span>
+                        <span class="lang-jp">ボーリングデータ → GIS解析 → リスク評価 → 標準レポート生成</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Section -->
+    <section id="market" class="market">
+        <div class="container">
+            <div class="section-header">
+                <h2>
+                    <span class="lang-en">A $15B Market Ready for Disruption</span>
+                    <span class="lang-jp">150億ドルの市場、変革の時</span>
+                </h2>
+                <p>
+                    <span class="lang-en">Starting with Japan's underserved $400M geotechnical market, with a clear path to global expansion.</span>
+                    <span class="lang-jp">日本の未開拓な4億ドルの地盤工学市場から始め、世界展開への明確な道筋を描きます。</span>
+                </p>
+            </div>
+            
+            <div class="market-visual">
+                <div class="market-circle tam-separate">
+                    <div class="market-text-content">
+                        <span>TAM</span>
+                        <div>$15B</div>
+                        <span><span class="lang-en">Global AEC Software</span><span class="lang-jp">世界のAECソフトウェア</span></span>
+                    </div>
+                </div>
+                <div class="market-circle sam-separate">
+                    <div class="market-text-content">
+                        <span>SAM</span>
+                        <div>$400M</div>
+                        <span><span class="lang-en">Japan GeoTech</span><span class="lang-jp">日本の地盤工学</span></span>
+                    </div>
+                </div>
+                <div class="market-circle som-separate">
+                    <div class="market-text-content">
+                        <span>SOM</span>
+                        <div>$20M</div>
+                        <span><span class="lang-en">Target</span><span class="lang-jp">目標市場</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-header">
+                <h2>
+                    <span class="lang-en">A World-Class Team with an Unfair Advantage</span>
+                    <span class="lang-jp">圧倒的優位性を持つワールドクラスのチーム</span>
+                </h2>
+                <p>
+                    <span class="lang-en">A unique combination of AI expertise, deep domain knowledge, and insider market access in Japan's conservative construction industry.</span>
+                    <span class="lang-jp">日本の保守的な建設業界において、AI専門知識、深いドメイン知識、そしてインサイダーとしての市場アクセスを独自に兼ね備えています。</span>
+                </p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-photo">SW</div>
+                    <h3>Stephen Wu, PhD</h3>
+                    <div class="role">
+                        <span class="lang-en">Co-CEO & AI Architect</span>
+                        <span class="lang-jp">共同CEO & AIアーキテクト</span>
+                    </div>
+                    <p>
+                        <span class="lang-en">Caltech PhD, MEXT Awardee. Expert in Multi-Agent Systems and AI knowledge representation.</span>
+                        <span class="lang-jp">カリフォルニア工科大学博士、文部科学省若手科学者賞受賞。マルチエージェントシステムとAI知識表現の専門家。</span>
+                    </p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-photo">YO</div>
+                    <h3>Yu Otake, PhD</h3>
+                    <div class="role">
+                        <span class="lang-en">Co-CEO & Industry Insider</span>
+                        <span class="lang-jp">共同CEO & 業界インサイダー</span>
+                    </div>
+                    <p>
+                        <span class="lang-en">Co-author of Japan's infrastructure standards. 15+ years in geotechnical consulting and regulatory frameworks.</span>
+                        <span class="lang-jp">日本のインフラ基準の共著者。地盤コンサルティングと規制の枠組みで15年以上の経験。</span>
+                    </p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-photo">WZ</div>
+                    <h3>Weidi Zhang</h3>
+                    <div class="role">
+                        <span class="lang-en">CBO (Chief Business Officer)</span>
+                        <span class="lang-jp">CBO (最高事業責任者)</span>
+                    </div>
+                    <p>
+                        <span class="lang-en">Ex-PropTech CSO, $5B+ in deals. ULI APAC Tech Council member with a proven B2B SaaS track record.</span>
+                        <span class="lang-jp">元PropTechのCSO、50億ドル以上の取引実績。ULI APAC技術評議会メンバーで、B2B SaaSで実績あり。</span>
+                    </p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-photo">SH</div>
+                    <h3>Sakuki Harada, PhD</h3>
+                    <div class="role">
+                        <span class="lang-en">CTO & ML Scientist</span>
+                        <span class="lang-jp">CTO & MLサイエンティスト</span>
+                    </div>
+                    <p>
+                        <span class="lang-en">Expert in domain-specific AI model training, with high-impact publications (IF: 14-15).</span>
+                        <span class="lang-jp">ドメイン特化型AIモデルの訓練専門家。高インパクト論文多数 (IF: 14-15)。</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="contact" class="final-cta">
+        <div class="container">
+            <h2>
+                <span class="lang-en">Ready to Build on a Foundation of Certainty?</span>
+                <span class="lang-jp">確実な基盤の上に、未来を築きませんか？</span>
+            </h2>
+            <p>
+                <span class="lang-en">Let's transform ground intelligence together. Reach out to schedule a private demo and see how TerrAI can de-risk your next project.</span>
+                <span class="lang-jp">共に地盤インテリジェンスを変革しましょう。プライベートデモを予約し、TerrAIが次のプロジェクトのリスクをどう軽減するかご覧ください。</span>
+            </p>
+             <a href="mailto:info.terrai.2025@gmail.com" class="btn btn-primary" style="margin-top: 1rem; background: var(--white); color: var(--deep-gray);">
+                <span class="lang-en">Request a Demo</span>
+                <span class="lang-jp">デモをリクエスト</span>
+             </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#problem"><span class="lang-en">Problem</span><span class="lang-jp">課題</span></a>
+                <a href="#solution"><span class="lang-en">Solution</span><span class="lang-jp">ソリューション</span></a>
+                <a href="#market"><span class="lang-en">Market</span><span class="lang-jp">市場</span></a>
+                <a href="#team"><span class="lang-en">Team</span><span class="lang-jp">チーム</span></a>
+                <a href="mailto:info.terrai.2025@gmail.com"><span class="lang-en">Contact</span><span class="lang-jp">お問い合わせ</span></a>
+            </div>
+            <p><span class="lang-en">© 2024 TerrAI Inc. All rights reserved.</span><span class="lang-jp">© 2024 TerrAI Inc. 全著作権所有。</span></p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.body;
+            const enBtn = document.getElementById('lang-en-btn');
+            const jpBtn = document.getElementById('lang-jp-btn');
+
+            function setLanguage(lang) {
+                if (lang === 'jp') {
+                    body.classList.remove('lang-en');
+                    body.classList.add('lang-jp');
+                    jpBtn.classList.add('active');
+                    enBtn.classList.remove('active');
+                } else {
+                    body.classList.remove('lang-jp');
+                    body.classList.add('lang-en');
+                    enBtn.classList.add('active');
+                    jpBtn.classList.remove('active');
+                }
+                localStorage.setItem('terrai-lang', lang);
+            }
+
+            enBtn.addEventListener('click', () => setLanguage('en'));
+            jpBtn.addEventListener('click', () => setLanguage('jp'));
+
+            // Set initial language from localStorage or default to English
+            const savedLang = localStorage.getItem('terrai-lang') || 'en';
+            setLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>
